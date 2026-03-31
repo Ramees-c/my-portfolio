@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f8fafc;
+    --card: #ffffff;
+    --primary: #0ea5e9;
+    --secondary: #8b5cf6;
+    --text: #0f172a;
+    --muted: #64748b;
+  }
+
+  .dark {
+    --background: #08080c;
+    --card: #12121a;
+    --primary: #00e5ff;
+    --secondary: #9d00ff;
+    --text: #f2f2f7;
+    --muted: #8e8e9e;
+  }
+
+  body {
+    @apply bg-background text-text font-sans antialiased transition-colors duration-300;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
+  }
+
+  .glass-card {
+    @apply bg-black/5 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 rounded-lg;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
