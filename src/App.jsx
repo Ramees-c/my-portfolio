@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
+import Preloader from './components/Preloader';
 import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
 import ProjectsSection from './components/ProjectsSection';
@@ -10,25 +11,39 @@ import Footer from './components/Footer';
 
 // Ensure dark mode is always active
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.add('dark');
-    // Optionally, remove any saved theme preference to prevent conflicts if the user previously selected light mode
-    // localStorage.removeItem('theme');
+    
+    // Simulate loading time (adjust as needed)
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2500);
+
+    return () => clearTimeout(loadingTimer);
   }, []);
+
+  const handleLoadingComplete = () => {
+    // Loading animation completed
+  };
 
   return (
     <div className="min-h-screen bg-background text-text font-sans selection:bg-primary/30 transition-colors duration-300 overflow-x-hidden">
-      <Navbar />
-      <main className="w-full relative">
-        <HeroSection />
-        <AboutSection />
-        <ProjectsSection />
-        <SkillsSection />
-        <ServicesSection />
-        <ContactSection />
-      </main>
-      <Footer />
+      <Preloader isLoading={isLoading} onLoadingComplete={handleLoadingComplete} />
+      {!isLoading && <Navbar />}
+      {!isLoading && (
+        <main className="w-full relative">
+          <HeroSection />
+          <AboutSection />
+          <ProjectsSection />
+          <SkillsSection />
+          <ServicesSection />
+          <ContactSection />
+        </main>
+      )}
+      {!isLoading && <Footer />}
     </div>
   );
 }
